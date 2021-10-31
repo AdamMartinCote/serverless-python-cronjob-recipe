@@ -5,10 +5,10 @@ This is a simple recipe to deploy an AWS Lambda function that can run arbitrary 
 ## TLDR
 
  - requirements:
-   - aws-cli with configured programmatic access
-   - sam-cli
+   - [aws-cli](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) with configured programmatic access
+   - [sam-cli](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
    - python
-   - docker (optional?)
+   - docker (not sure if required)
  - publish:
    - `make build`
    - `make deploy`
