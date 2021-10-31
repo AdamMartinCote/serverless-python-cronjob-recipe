@@ -1,0 +1,35 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  serverless-python-cronjob-recipe
+
+  Recipe for running arbitrary Python code on schedule
+
+Resources:
+  ScheduledFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambda_function
+      Handler: scheduled_function/app.lambda_handler
+      Runtime: python3.9
+      Timeout: 5
+      Events:
+        OnSchedule:
+          Type: Schedule
+          Properties:
+            # Use EventBridge rate expressions:
+            # syntax:
+            #   rate( <int> <minute | minutes | hour | hours | day | days> )
+            # https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-create-rule-schedule.html
+            Schedule: rate(1 minute)
+            Enabled: True
+
+
+Outputs:
+  ScheduledFunction:
+    Description: "ARN of the scheduled function"
+    Value: !GetAtt ScheduledFunction.Arn
+  ScheduledFunctionIamRole:
+    Description: "ARN of the implicit IAM Role created for the scheduled function"
+    Value: !GetAtt ScheduledFunctionRole.Arn
